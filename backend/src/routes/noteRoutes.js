@@ -7,6 +7,7 @@ import {
   createNote,
   updateNote,
   deleteNote,
+  searchNotes
 } from '../controllers/noteController.js'
 
 const router = express.Router();
@@ -16,8 +17,11 @@ router.use(protectRoute);
 
 router.get("/folder/:folderId", getNotes);
 router.get("/folder/:folderId/:noteId", getNoteById);
+
 router.post("/folder/:folderId", createNote);
 router.put("/folder/:folderId/:noteId", updateNote);
 router.delete("/folder/:folderId/:noteId", deleteNote);
+
+router.get("/search", protectRoute, searchNotes);
 
 export default router

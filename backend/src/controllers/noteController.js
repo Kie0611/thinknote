@@ -118,3 +118,37 @@ export const deleteNote = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const searchNotes = async (req, res) => {
+
+  const { query } = req.query;
+  const userId = req.user._id;
+
+  try {
+
+    if (!query) {
+      return res.status(200).json([]);
+    }
+
+    const notes = await Note.find({
+      user: userId,
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+        { tags: { $regex: query, $options: "i" } }
+      ]
+    });
+
+    res.status(200).json(notes);
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      message: "Search failed"
+    });
+
+  }
+
+};
