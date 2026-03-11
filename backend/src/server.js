@@ -5,6 +5,7 @@ import { connectDB } from '../config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import folderRoutes from './routes/folderRoutes.js'
 import noteRoutes from './routes/noteRoutes.js'
+import aiRoutes from './routes/aiRoutes.js';
 
 const app = express();
 const PORT = ENV.PORT;
@@ -15,6 +16,10 @@ app.use(cookieParser()) //req.cookies
 app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/folders", folderRoutes)
 app.use("/api/v1/notes", noteRoutes)
+app.use("/api/v1/ai", aiRoutes);
+app.use("/api/v1/test", (req, res) => {
+  res.json({ message: "API is working" });
+})
 
 app.listen(PORT, () => {
   console.log('Server is running on port:', PORT);
