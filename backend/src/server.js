@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes.js';
 import folderRoutes from './routes/folderRoutes.js'
 import noteRoutes from './routes/noteRoutes.js'
 import aiRoutes from './routes/aiRoutes.js';
+import flashcardRoutes from './routes/flashcardRoutes.js';
 
 const app = express();
 const PORT = ENV.PORT;
@@ -17,9 +18,7 @@ app.use("/api/v1/auth", authRoutes)
 app.use("/api/v1/folders", folderRoutes)
 app.use("/api/v1/notes", noteRoutes)
 app.use("/api/v1/ai", aiRoutes);
-app.use("/api/v1/test", (req, res) => {
-  res.json({ message: "API is working" });
-})
+app.use("/api/v1/flashcards", flashcardRoutes);
 
 app.listen(PORT, () => {
   console.log('Server is running on port:', PORT);
