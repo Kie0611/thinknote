@@ -44,3 +44,30 @@ export const generateFlashcards = async (content) => {
   const flashcards = JSON.parse(match[0]);
   return flashcards;
 };
+
+export const askQuestionAboutNote = async (content, history, question) => {
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+  const prompt = `
+  You are an AI study assistant.
+
+  The student has written the following note:
+
+  ${content}
+
+  Previous conversation history between the student and the AI:
+  ${history}
+
+  The student asks:
+  ${question}
+
+  Answer the question using the note as the main context. 
+  You may expand, explain, or clarify the topic to help the student understand better.
+  Keep the answer clear and educational.
+  `;
+
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+
+  return response.text();
+};
