@@ -6,6 +6,10 @@ const folderSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  icon: {
+    type: String,
+    default: 'Folder',
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

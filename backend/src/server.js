@@ -7,10 +7,15 @@ import folderRoutes from './routes/folderRoutes.js'
 import noteRoutes from './routes/noteRoutes.js'
 import aiRoutes from './routes/aiRoutes.js';
 import flashcardRoutes from './routes/flashcardRoutes.js';
+import cors from 'cors';
 
 const app = express();
 const PORT = ENV.PORT;
 
+app.use(cors({
+  origin: ENV.CLIENT_URL,
+  credentials: true
+}))
 app.use(express.json()); //req.body
 app.use(cookieParser()) //req.cookies
 

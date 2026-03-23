@@ -22,8 +22,7 @@ export const signup = async (req, res) => {
 
     if (!usernameRegex.test(username)) {
       return res.status(400).json({
-        message:
-          "Username must start with a letter and contain only letters, numbers, underscores, or dots",
+        message: "Username must start with a letter and contain only letters, numbers, underscores, or dots",
       });
     }
 
@@ -40,10 +39,15 @@ export const signup = async (req, res) => {
       return res.status(400).json({ message: "Invalid email format" });
     }
 
-    const user = await User.findOne({ email });
-
-    if (user) {
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
       return res.status(400).json({ message: "Email already exists" });
+    }
+
+    // ← added
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.status(400).json({ message: "Username already taken" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

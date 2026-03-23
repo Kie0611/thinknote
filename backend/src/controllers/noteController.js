@@ -1,5 +1,14 @@
 import Note from "../models/Note.js";
 
+export const getAllNotes = async (req, res) => {
+  try {
+    const notes = await Note.find({ user: req.user._id }).sort({ createdAt: -1 })
+    res.status(200).json(notes)
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" })
+  }
+}
+
 export const getNotes = async (req, res) => {
   const { folderId } = req.params;
   const userId = req.user._id;
@@ -83,7 +92,7 @@ export const updateNote = async (req, res) => {
         content,
         tags
       },
-      { new: true }
+      { returnDocument: 'after' }
     );
 
     if (!note) {

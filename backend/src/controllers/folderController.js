@@ -37,7 +37,7 @@ export const getFolderById = async (req, res) => {
 };
 
 export const createFolder = async (req, res) => {
-  const { name } = req.body;
+  const { name, icon } = req.body;
 
   if (!name) {
     return res.status(400).json({ message: "Folder name is required" });
@@ -46,6 +46,7 @@ export const createFolder = async (req, res) => {
   try {
     const newFolder = new Folder({
       name,
+      icon,
       user: req.user._id
     });
     await newFolder.save();
